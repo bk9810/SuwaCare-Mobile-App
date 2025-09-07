@@ -1,0 +1,74 @@
+
+
+.form-container {
+  max-width: 600px;
+  margin: 30px auto;
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Form Labels */
+.form-container label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+/* Inputs, Selects & Textarea */
+.form-container input,
+.form-container textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+  background: #060606;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+  border-color: #3498db;
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
+}
+
+/* Submit Button */
+.form-container button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-container button:hover {
+  background: linear-gradient(90deg, #2980b9, #1f6391);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(41, 128, 185, 0.4);
+}
+
+/* Textarea resize */
+.form-container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
