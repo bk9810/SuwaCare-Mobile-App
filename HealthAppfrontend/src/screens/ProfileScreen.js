@@ -198,19 +198,10 @@ const ProfileScreen = ({ navigation, route }) => {
         <View>
          
           <Text style={styles.value}>{profile.fullName}</Text>
-
-        
           <Text style={styles.value}>{profile.email}</Text>
-
-          
           <Text style={styles.value}>{profile.phone}</Text>
-
-          
           <Text style={styles.value}>{profile.address}</Text>
-
-          
           <Text style={styles.value}>{profile.age}</Text>
-
           <TouchableOpacity style={styles.button} onPress={handleEdit}>
             <Text style={styles.buttonText}>Manage</Text>
           </TouchableOpacity>
@@ -242,7 +233,7 @@ const ProfileScreen = ({ navigation, route }) => {
             ))
           )}
 
-          {/* Toggle button */}
+         
           <TouchableOpacity
             style={styles.button}
             onPress={() => setShowDiseaseForm(!showDiseaseForm)}
@@ -252,7 +243,6 @@ const ProfileScreen = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
 
-          {/* ✅ Disease Form */}
           {showDiseaseForm && (
             <View style={styles.formBox}>
               <TextInput
@@ -289,7 +279,7 @@ const ProfileScreen = ({ navigation, route }) => {
           )}
         </View>
       ) : (
-        // ✅ Edit Mode
+        
         <View>
           <Text style={styles.label}>Full Name</Text>
           <TextInput

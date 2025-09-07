@@ -1,6 +1,4 @@
 const pool = require("../config/db");
-
-// Create a new consultant request (patient side)
 async function createConsultantRequest({ patient_id, doctor_id, reason, preferred_datetime }) {
   const result = await pool.query(
     `INSERT INTO consultants (patient_id, doctor_id, reason, preferred_datetime, status) 
@@ -10,7 +8,6 @@ async function createConsultantRequest({ patient_id, doctor_id, reason, preferre
   return result.rows[0];
 }
 
-// Get all consultant requests for a doctor
 async function getConsultantsByDoctor(doctor_id) {
   const result = await pool.query(
     "SELECT * FROM consultants WHERE doctor_id = $1 ORDER BY created_at DESC",
@@ -18,8 +15,6 @@ async function getConsultantsByDoctor(doctor_id) {
   );
   return result.rows;
 }
-
-// Get all consultant requests for a patient
 async function getConsultantsByPatient(patient_id) {
   const result = await pool.query(
     "SELECT * FROM consultants WHERE patient_id = $1 ORDER BY created_at DESC",
@@ -27,8 +22,6 @@ async function getConsultantsByPatient(patient_id) {
   );
   return result.rows;
 }
-
-// Update consultant status (doctor accepts/rejects)
 async function updateConsultantStatus(consultant_id, status, meeting_link = null) {
   const result = await pool.query(
     `UPDATE consultants SET status=$1, meeting_link=$2 

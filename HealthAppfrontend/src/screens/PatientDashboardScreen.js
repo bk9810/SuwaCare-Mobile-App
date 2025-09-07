@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { getPatientProfile, getChronicDiseases, getPersonalizedTips  } from '../services/api';
 import { Ionicons } from '@expo/vector-icons';
-import Geolocation from 'react-native-geolocation-service'; // ✅ import geolocation
+import Geolocation from 'react-native-geolocation-service'; 
 
 export default function PatientDashboardScreen({ route, navigation }) {
   const { token, patient, selectedLanguage } = route.params || {};
@@ -83,7 +83,7 @@ const [tipsLoading, setTipsLoading] = useState(true);
 
 
 
-  // ✅ Get Current Location (without permission lib)
+
   const getMyLocation = () => {
     Geolocation.getCurrentPosition(
       (pos) => {

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const Patient = require('../models/patientModel');
 require('dotenv').config();
 
-// Register Patient
+
 const registerPatient = async (req, res) => {
   try {
     const { name, email, phone, password, address, dob } = req.body;
@@ -26,7 +26,7 @@ const registerPatient = async (req, res) => {
   }
 };
 
-// Patient Login
+
 const loginPatient = async (req, res) => {
   try {
     const { email, password } = req.body;

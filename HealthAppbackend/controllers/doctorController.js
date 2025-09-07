@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const doctorController = {
-  // Register Doctor
+
   async registerDoctor(req, res) {
     try {
       const { name, email, password, phone, specialization } = req.body;
@@ -26,7 +26,7 @@ const doctorController = {
     }
   },
 
-  // Get Doctors (with filtering)
+ 
   async getDoctors(req, res) {
     try {
       const { disease, specialization } = req.query;

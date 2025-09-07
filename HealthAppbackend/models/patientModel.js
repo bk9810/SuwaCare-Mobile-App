@@ -1,7 +1,5 @@
-// models/patientModel.js
-const pool = require('../config/db');
 
-// Create a new patient
+const pool = require('../config/db');
 const createPatient = async ({ name, email, phone, password, address, dob }) => {
   const query = `
     INSERT INTO patients (name, email, phone, password, address, dob)
@@ -12,22 +10,16 @@ const createPatient = async ({ name, email, phone, password, address, dob }) => 
   const result = await pool.query(query, values);
   return result.rows[0];
 };
-
-// Get patient by email
 const getPatientByEmail = async (email) => {
   const query = 'SELECT * FROM patients WHERE email = $1';
   const result = await pool.query(query, [email]);
   return result.rows[0];
 };
-
-// Get patient by ID
 const getPatientById = async (id) => {
   const query = 'SELECT * FROM patients WHERE patient_id = $1';
   const result = await pool.query(query, [id]);
   return result.rows[0];
 };
-
-// Update patient by ID
 const updatePatientById = async (id, { name, email, phone, address, dob }) => {
   const query = `
     UPDATE patients
@@ -39,8 +31,5 @@ const updatePatientById = async (id, { name, email, phone, address, dob }) => {
   const result = await pool.query(query, values);
   return result.rows[0];
 };
-
-
-
 module.exports = { createPatient, getPatientByEmail, getPatientById, updatePatientById };
 

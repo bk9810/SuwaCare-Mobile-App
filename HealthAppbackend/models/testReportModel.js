@@ -2,7 +2,7 @@
 const pool = require("../config/db");
 
 async function addReport(patient_id, doctor_id, title, description, result, uploaded_by) {
-  // Check if doctor is assigned to patient
+  
   const check = await pool.query(
     "SELECT id FROM doctor_patient WHERE doctor_id = $1 AND patient_id = $2",
     [doctor_id, patient_id]
@@ -20,10 +20,7 @@ async function addReport(patient_id, doctor_id, title, description, result, uplo
   `;
   const values = [patient_id, doctor_id, title, description, result, uploaded_by, doctor_patient_id];
   const resultDb = await pool.query(query, values);
-  
-  // Create notification for lab
   await createLabNotification(resultDb.rows[0]);
-  
   return resultDb.rows[0];
 }
 
@@ -35,10 +32,9 @@ async function createLabNotification(report) {
   `;
   
   const notificationTitle = `New ${report.uploaded_by === 'patient' ? 'Patient' : 'Doctor'} Report: ${report.title}`;
-  
-  // Fixed: Use report.id instead of report.report_id (the column returned from INSERT is likely 'id')
+
   await pool.query(notificationQuery, [
-    report.id || report.report_id, // Handle both cases
+    report.id || report.report_id,
     report.patient_id,
     report.doctor_id,
     notificationTitle
@@ -58,18 +54,18 @@ async function getReportsByDoctor(doctor_id) {
 }
 
 async function getReportById(report_id) {
-  // Updated to handle both id and report_id column names
+
   const result = await pool.query("SELECT * FROM test_reports WHERE id = $1 OR report_id = $1", [report_id]);
   return result.rows[0];
 }
 
 async function deleteReport(report_id) {
-  // Updated to handle both id and report_id column names
+ 
   const result = await pool.query("DELETE FROM test_reports WHERE id = $1 OR report_id = $1 RETURNING *", [report_id]);
   return result.rows[0];
 }
 
-// Lab notification functions
+
 async function getLabNotifications() {
   const query = `
     SELECT ln.*, tr.title as report_title, tr.description, tr.result,

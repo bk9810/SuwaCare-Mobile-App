@@ -3,10 +3,10 @@ const Appointment = require('../models/appointmentModel');
 const doctorModel = require('../models/doctorModel');
 
 const appointmentController = {
-  // Patient books an appointment - SIMPLIFIED FOR TESTING
+ 
   async bookAppointment(req, res) {
     try {
-      // Get patient ID from token or request body
+      
       const patientId = req.body.patient_id || (req.user && req.user.patientId);
       
       console.log('📋 Booking request received:', {
@@ -25,7 +25,7 @@ const appointmentController = {
         return res.status(400).json({ message: 'doctor_id and department are required.' });
       }
 
-      // Convert doctor_id to number for database query
+     
       const doctorIdNum = parseInt(doctor_id);
       
       console.log('🔍 Doctor validation:', {

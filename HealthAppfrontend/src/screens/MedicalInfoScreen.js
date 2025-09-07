@@ -12,7 +12,7 @@ export default function MedicalInfoScreen({ navigation }) {
         style={styles.button}
         onPress={() => navigation.navigate('BookAppointment')}
       >
-        <Text style={styles.buttonText}>View Prescription (Online/Offline)</Text>
+        <Text style={styles.buttonText}>Create Booking</Text>
       </TouchableOpacity>
 
       {/* Medical Consultations */}

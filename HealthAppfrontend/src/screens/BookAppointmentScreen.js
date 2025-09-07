@@ -25,6 +25,7 @@ export default function BookAppointmentScreen({navigation, patientId: propPatien
     'Nephrology',
     'Neurology',
     'General Medicine',
+    'Hypertension'
   ]);
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState('');
@@ -236,7 +237,7 @@ export default function BookAppointmentScreen({navigation, patientId: propPatien
       <View style={styles.formSection}>
         <Text style={styles.title}>Book Appointment</Text>
 
-        {/* Department Selection */}
+      
         <Text style={styles.label}>Department *</Text>
         <View style={styles.pickerContainer}>
           <Picker 
@@ -251,7 +252,7 @@ export default function BookAppointmentScreen({navigation, patientId: propPatien
           </Picker>
         </View>
 
-        {/* Doctor Selection */}
+        
         <Text style={styles.label}>Doctor *</Text>
         {doctorsLoading ? (
           <View style={styles.loadingContainer}>
@@ -281,14 +282,14 @@ export default function BookAppointmentScreen({navigation, patientId: propPatien
           </View>
         )}
 
-        {/* Debug Info - Remove in production */}
+        
         {department && (
           <Text style={styles.debugText}>
             Debug: {doctors.length} doctors found for {department}
           </Text>
         )}
 
-        {/* Reason */}
+      
         <Text style={styles.label}>Reason for Visit</Text>
         <TextInput
           value={reason}
@@ -299,7 +300,7 @@ export default function BookAppointmentScreen({navigation, patientId: propPatien
           numberOfLines={3}
         />
 
-        {/* Scheduled Date/Time */}
+        
         <Text style={styles.label}>Preferred Date/Time</Text>
         <TextInput
           value={scheduledAt}
@@ -308,7 +309,7 @@ export default function BookAppointmentScreen({navigation, patientId: propPatien
           style={styles.input}
         />
 
-        {/* Submit Button */}
+        
         <View style={[
           styles.submitButton, 
           (loading || !department || !selectedDoctorId) && styles.submitButtonDisabled
@@ -321,7 +322,7 @@ export default function BookAppointmentScreen({navigation, patientId: propPatien
           />
         </View>
 
-        {/* Message Display */}
+        
         {message ? (
           <View style={[
             styles.messageContainer,
