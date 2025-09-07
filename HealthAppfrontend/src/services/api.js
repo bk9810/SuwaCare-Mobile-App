@@ -369,3 +369,76 @@ export const updateNotificationStatus = async (notificationId, updateData) => {
   const { data } = await api.put(`/test-reports/lab/notifications/${notificationId}`, updateData);
   return data;
 };
+
+
+// Patient creates a consultation request
+export const createConsultation = async (data) => {
+  try {
+    console.log('📝 Creating consultation:', data);
+    const response = await api.post("/consultants", data);
+    return response.data;
+  } catch (error) {
+    console.error('❌ Create consultation error:', error);
+    throw error;
+  }
+};
+
+// Patient fetches their consultation requests
+export const getPatientConsultations = async (patientId) => {
+  try {
+    if (!patientId) {
+      throw new Error('Patient ID is required');
+    }
+    console.log('📋 Fetching patient consultations for:', patientId);
+    const response = await api.get(`/consultants/patient/${patientId}`);
+    return response.data;
+  } catch (error) {
+    console.error('❌ Get patient consultations error:', error);
+    throw error;
+  }
+};
+
+// Doctor fetches all consultation requests
+export const getDoctorConsultations = async (doctorId) => {
+  try {
+    if (!doctorId) {
+      throw new Error('Doctor ID is required');
+    }
+    console.log('👩‍⚕️ Fetching doctor consultations for:', doctorId);
+    const response = await api.get(`/consultants/doctor/${doctorId}`);
+    return response.data;
+  } catch (error) {
+    console.error('❌ Get doctor consultations error:', error);
+    throw error;
+  }
+};
+
+// Doctor accepts a consultation (generates Google Meet link)
+export const acceptConsultation = async (consultantId, data) => {
+  try {
+    if (!consultantId) {
+      throw new Error('Consultant ID is required');
+    }
+    console.log('✅ Accepting consultation:', consultantId, data);
+    const response = await api.put(`/consultants/${consultantId}/accept`, data);
+    return response.data;
+  } catch (error) {
+    console.error('❌ Accept consultation error:', error);
+    throw error;
+  }
+};
+
+// Doctor rejects a consultation
+export const rejectConsultation = async (consultantId) => {
+  try {
+    if (!consultantId) {
+      throw new Error('Consultant ID is required');
+    }
+    console.log('❌ Rejecting consultation:', consultantId);
+    const response = await api.put(`/consultants/${consultantId}/reject`);
+    return response.data;
+  } catch (error) {
+    console.error('❌ Reject consultation error:', error);
+    throw error;
+  }
+};

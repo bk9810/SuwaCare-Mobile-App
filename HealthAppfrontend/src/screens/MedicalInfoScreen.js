@@ -18,7 +18,7 @@ export default function MedicalInfoScreen({ navigation }) {
       {/* Medical Consultations */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('#')}
+        onPress={() => navigation.navigate('CreateConsultationRequestScreen')}
       >
         <Text style={styles.buttonText}>Medical Consultations</Text>
       </TouchableOpacity>

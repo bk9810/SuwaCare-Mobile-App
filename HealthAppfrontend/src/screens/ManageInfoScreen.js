@@ -6,20 +6,20 @@ export default function ManageInfoScreen({ navigation }) {  // <-- add navigatio
     <View style={styles.container}>
       <Text style={styles.title}>Medical Information</Text>
 
-      {/* Doctor Appointment */}
+      
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('DoctorAppointment')} // ✅ works now
+        onPress={() => navigation.navigate('DoctorAppointment')} 
       >
-        <Text style={styles.buttonText}>Doctor Appointment (Online/Offline)</Text>
+        <Text style={styles.buttonText}>Manage Appointment</Text>
       </TouchableOpacity>
 
-      {/* Medical Consultations */}
+    
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('MedicalConsultations')}
+        onPress={() => navigation.navigate('DoctorConsultationScreen')}
       >
-        <Text style={styles.buttonText}>Medical Consultations</Text>
+        <Text style={styles.buttonText}>Manage Consultations</Text>
       </TouchableOpacity>
     </View>
   );

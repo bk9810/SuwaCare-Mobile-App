@@ -6,7 +6,7 @@ export default function LanguageSelectionScreen({ navigation, route }) {
 
   const handleSelectLanguage = (lang) => {
     console.log("Selected language:", lang);
-    navigation.navigate("RoleSelection", { selectedLanguage: lang });
+    navigation.navigate("PatientLogin", { selectedLanguage: lang });
   };
 
   return (

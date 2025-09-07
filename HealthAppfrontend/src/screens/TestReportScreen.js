@@ -10,11 +10,14 @@ import {
   ScrollView,
   Modal
 } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { getPatientReports, addReport, getDoctorsByPatient } from "../services/api";
 
-const PatientReports = ({ patientId }) => {
+const PatientReports = ({ props }) => {
+  const route = useRoute();
   const [reports, setReports] = useState([]);
   const [assignedDoctors, setAssignedDoctors] = useState([]);
+  const finalpatientId = route.params?.patientId || props.patientId;
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [form, setForm] = useState({
     doctor_id: "",
@@ -25,6 +28,14 @@ const PatientReports = ({ patientId }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!finalpatientId) {
+      console.error("❌ patientId is missing");
+       return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: "red" }}>⚠️ Patient ID not found</Text>
+      </View>
+    );
+    }
     fetchReports();
     fetchAssignedDoctors();
   }, [patientId]);
@@ -42,10 +53,25 @@ const PatientReports = ({ patientId }) => {
 
   const fetchAssignedDoctors = async () => {
     try {
+      console.log("🔍 Fetching doctors for patient:", patientId);
+      console.log("🌐 API endpoint:", `/doctor-patients/patient/${patientId}`);
+
       const data = await getDoctorsByPatient(patientId);
+      console.log("✅ Doctors fetched successfully:", data);
       setAssignedDoctors(data);
     } catch (err) {
-      console.error("Error fetching doctors:", err);
+      console.error("❌ Error fetching doctors:", err);
+      console.error("Error details:", {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status,
+        url: err.config?.url,
+      });
+
+      Alert.alert(
+        "Error",
+        `Failed to fetch assigned doctors: ${err.response?.data?.error || err.message}`
+      );
     }
   };
 
@@ -63,7 +89,6 @@ const PatientReports = ({ patientId }) => {
         uploaded_by: "patient",
       });
 
-      // Reset form and close modal
       setForm({
         doctor_id: "",
         title: "",
@@ -71,10 +96,9 @@ const PatientReports = ({ patientId }) => {
         result: "",
       });
       setShowUploadForm(false);
-      
-      // Refresh reports
+
       await fetchReports();
-      
+
       Alert.alert("Success", "Report uploaded successfully and lab has been notified!");
     } catch (error) {
       console.error("Upload error:", error);
@@ -97,12 +121,14 @@ const PatientReports = ({ patientId }) => {
     <View style={styles.reportCard}>
       <View style={styles.reportHeader}>
         <Text style={styles.title}>{item.title}</Text>
-        <View style={[
-          styles.uploadedByBadge, 
-          item.uploaded_by === 'patient' ? styles.patientBadge : styles.doctorBadge
-        ]}>
+        <View
+          style={[
+            styles.uploadedByBadge,
+            item.uploaded_by === "patient" ? styles.patientBadge : styles.doctorBadge,
+          ]}
+        >
           <Text style={styles.badgeText}>
-            {item.uploaded_by === 'patient' ? 'You' : 'Doctor'}
+            {item.uploaded_by === "patient" ? "You" : "Doctor"}
           </Text>
         </View>
       </View>
@@ -126,14 +152,16 @@ const PatientReports = ({ patientId }) => {
             key={doctor.doctor_id}
             style={[
               styles.doctorOption,
-              form.doctor_id === doctor.doctor_id && styles.selectedDoctor
+              form.doctor_id === doctor.doctor_id && styles.selectedDoctor,
             ]}
             onPress={() => setForm({ ...form, doctor_id: doctor.doctor_id })}
           >
-            <Text style={[
-              styles.doctorName,
-              form.doctor_id === doctor.doctor_id && styles.selectedDoctorText
-            ]}>
+            <Text
+              style={[
+                styles.doctorName,
+                form.doctor_id === doctor.doctor_id && styles.selectedDoctorText,
+              ]}
+            >
               Dr. {doctor.name}
             </Text>
             <Text style={styles.doctorSpec}>{doctor.specialization}</Text>
@@ -158,7 +186,9 @@ const PatientReports = ({ patientId }) => {
       {reports.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText}>No reports available</Text>
-          <Text style={styles.emptySubtext}>Upload your first lab report to get started</Text>
+          <Text style={styles.emptySubtext}>
+            Upload your first lab report to get started
+          </Text>
         </View>
       ) : (
         <FlatList

@@ -1,42 +1,47 @@
-//i18n.js
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import en from "./locales/en.json";
-import si from "./locales/si.json";
-import ta from "./locales/ta.json";
 
-export const supportedLngs = ["en", "si", "ta"];
-
-i18n
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: { translation: en },
-      si: { translation: si },
-      ta: { translation: ta },
+const resources = {
+  en: {
+    translation: {
+      select_language: "Select your language",
+      patient_login: "Patient Login",
+      email: "Email",
+      password: "Password",
+      login: "Login",
+      register: "Don’t have an account? Register",
     },
-    lng: "en",             // default
-    fallbackLng: "en",
-    supportedLngs,
-    compatibilityJSON: "v3",
-    interpolation: { escapeValue: false },
-    returnNull: false,
-  });
+  },
+  si: {
+    translation: {
+      select_language: "භාෂාව තෝරන්න",
+      patient_login: "රෝගියා ලොග් වන්න",
+      email: "ඊමේල්",
+      password: "මුරපදය",
+      login: "ඇතුල් වන්න",
+      register: "ගිණුමක් නැද්ද? ලියාපදිංචි වන්න",
+    },
+  },
+  ta: {
+    translation: {
+      select_language: "உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்",
+      patient_login: "நோயாளர் உள்நுழைவு",
+      email: "மின்னஞ்சல்",
+      password: "கடவுச்சொல்",
+      login: "உள்நுழைக",
+      register: "கணக்கு இல்லையா? பதிவு செய்யவும்",
+    },
+  },
+};
 
-export async function loadSavedLanguage() {
-  try {
-    const saved = await AsyncStorage.getItem("app_lng");
-    if (saved && supportedLngs.includes(saved)) {
-      await i18n.changeLanguage(saved);
-    }
-  } catch {}
-}
-
-export async function setAppLanguage(lng) {
-  await i18n.changeLanguage(lng);
-  await AsyncStorage.setItem("app_lng", lng);
-}
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "en", // default
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export default i18n;

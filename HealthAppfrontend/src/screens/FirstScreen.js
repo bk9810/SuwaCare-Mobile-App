@@ -3,25 +3,30 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from "react-i18next";
-import { LanguageContext } from "../context/LanguageContext";
+import i18n from "../i18n";
 
 export default function LanguageSelectionScreen({ navigation }) {
- const { changeLanguage, t } = useContext(LanguageContext);
+  const { t } = useTranslation();
 
-   const selectLanguage = (lang) => {
-    changeLanguage(lang);
-    navigation.replace("RoleSelection");
-  };
+  const selectLanguage = (lang) => {
+  i18n.changeLanguage(lang).then(() => {
+    console.log("✅ Language switched to:", i18n.language);
+    navigation.replace("RoleSelection", { selectedLanguage: lang });
+  });
+};
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t("select_language")}</Text>
+
       <TouchableOpacity style={styles.button} onPress={() => selectLanguage("en")}>
         <Text>English</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={() => selectLanguage("si")}>
         <Text>සිංහල</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={() => selectLanguage("ta")}>
         <Text>தமிழ்</Text>
       </TouchableOpacity>

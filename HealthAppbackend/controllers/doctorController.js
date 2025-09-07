@@ -174,6 +174,9 @@ const doctorController = {
       });
     }
   },
+
+
+  
 };
 
 module.exports = doctorController;

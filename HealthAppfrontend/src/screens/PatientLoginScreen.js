@@ -3,53 +3,69 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { loginPatient } from '../services/api';
 import { setSession } from '../services/session';
+import { useTranslation } from "react-i18next";
 
 export default function PatientLoginScreen({ route, navigation }) {
-  const { selectedLanguage } = route.params || { selectedLanguage: 'English' };
+  const { t } = useTranslation();
+  const { selectedLanguage } = route.params || { selectedLanguage: 'en' };
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert("Error", "Please enter email and password.");
+      Alert.alert(t("error"), t("please_enter_email_password"));
       return;
     }
 
     try {
       const data = await loginPatient({ email, password });
       if (data.token) {
-        // Save globally
         await setSession({ token: data.token, patient: data.patient });
-
-        // Navigate and pass params (so children can read them too)
         navigation.replace("PatientDashboard", {
           token: data.token,
           patient: data.patient,
           selectedLanguage,
         });
       } else {
-        Alert.alert("Error", data.message || "Invalid credentials");
+        Alert.alert(t("error"), data.message || t("invalid_credentials"));
       }
     } catch (error) {
-      console.error("Login Error:", error?.response?.data || error.message);
-      Alert.alert("Error", error?.response?.data?.message || "Something went wrong");
+      Alert.alert(t("error"), error?.response?.data?.message || t("something_went_wrong"));
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Patient Login</Text>
-      <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" value={email} onChangeText={setEmail} />
-      <TextInput style={styles.input} placeholder="Password" secureTextEntry value={password} onChangeText={setPassword} />
+      <Text style={styles.title}>{t("patient_login")}</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder={t("email")}
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder={t("password")}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>{t("login")}</Text>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.replace("PatientRegistration", { selectedLanguage })}>
-        <Text style={styles.linkText}>Don’t have an account? Register</Text>
+        <Text style={styles.linkText}>{t("register")}</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: { 

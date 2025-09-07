@@ -4,7 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { View } from 'react-native';
-import { LanguageProvider } from "./src/context/LanguageContext";
+import i18n from "./src/i18n";
+
 
 // Patient Screens
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -24,6 +25,9 @@ import MyAppointmentsScreen from './src/screens/MyAppointmentsScreen';
 import PatientMedicinesScreen from './src/screens/PatientMedicinesScreen';
 import MyPrescriptionsScreen from './src/screens/MyPrescriptionsScreen';
 import PrescriptionDetailsScreen from './src/screens/PrescriptionDetailsScreen';
+import CreateConsultationRequestScreen from './src/screens/CreateConsultationRequestScreen';
+import PatientConsultationsScreen from './src/screens/PatientConsultationsScreen';
+
 
 // Caregiver Screens
 import CaregiverRegister from './src/screens/CaregiverRegisterScreen';
@@ -43,6 +47,9 @@ import AddMedicineScreen from './src/screens/AddMedicineScreen';
 import CreatePrescriptionScreen from './src/screens/CreatePrescriptionScreen';
 import DoctorPrescriptionsScreen from './src/screens/DoctorPrescriptionScreen';
 import DoctorExtendedProfileScreen from './src/screens/DoctorExtendedProfileScreen';
+import DoctorConsultationScreen from './src/screens/DoctorConsultationsScreen';
+import ConsultationDetailsScreen from './src/screens/ConsultationDetailsScreen';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -156,7 +163,7 @@ function DoctorTabNavigator({ route }) {
 /* -------------------- Main App -------------------- */
 export default function App() {
   return (
-    <LanguageProvider>
+    
       <NavigationContainer>
       <Stack.Navigator initialRouteName="WelcomeScreen" screenOptions={{ headerShown: false }}>
         {/* Common Screens */}
@@ -175,6 +182,8 @@ export default function App() {
         <Stack.Screen name="PatientMedicines" component={PatientMedicinesScreen} />
         <Stack.Screen name="PrescriptionDetails" component={PrescriptionDetailsScreen} />
         <Stack.Screen name="MyPrescriptions" component={MyPrescriptionsScreen}/>
+        <Stack.Screen name="CreateConsultationRequestScreen" component={CreateConsultationRequestScreen}/>
+        <Stack.Screen name="PatientConsultationsScreen" component={PatientConsultationsScreen}/>
 
         {/* Caregiver Flow */}
         <Stack.Screen name="CaregiverRegister" component={CaregiverRegister} />
@@ -192,8 +201,10 @@ export default function App() {
         <Stack.Screen 
           name="DoctorExtendedProfileScreen" 
           component={DoctorExtendedProfileScreen}/>
+      <Stack.Screen name= "DoctorConsultationScreen" component={DoctorConsultationScreen}/>
+      <Stack.Screen name="ConsultationDetailsScreen" component={ConsultationDetailsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
-    </LanguageProvider>
+    
   );
 }
